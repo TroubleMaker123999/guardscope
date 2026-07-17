@@ -1,0 +1,28 @@
+[
+  {
+    "name": "requests",
+    "version": "2.20.0",
+    "vulns": [
+      {
+        "id": "PYSEC-2023-74",
+        "fix_versions": ["2.31.0"],
+        "aliases": ["CVE-2023-32681"],
+        "description": "Requests <2.32.0 leaks Proxy-Authorization headers.",
+        "cwe": {"id": "CWE-20"}
+      }
+    ]
+  },
+  {
+    "name": "pillow",
+    "version": "9.0.0",
+    "vulns": [
+      {
+        "id": "PYSEC-2023-175",
+        "fix_versions": ["10.2.0"],
+        "aliases": ["CVE-2023-44271"],
+        "description": "Pillow DoS via text length in ImageFont.",
+        "cwe": {"id": "CWE-400"}
+      }
+    ]
+  }
+]

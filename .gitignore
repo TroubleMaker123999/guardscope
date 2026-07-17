@@ -1,0 +1,27 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+.coverage
+build/
+dist/
+*.db
+*.sqlite
+*.sqlite3
+reports/
+.idea/
+.vscode/
+
+# Generated build/test artifacts
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.cache/
+frontend/.env
+frontend/.env.local
+frontend/tsconfig.tsbuildinfo
+*.log
+*.map
+.DS_Store

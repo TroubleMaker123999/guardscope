@@ -1,0 +1,20 @@
+services:
+  lab:
+    image: nginx:1.27-alpine
+    container_name: guardscope-demo-lab
+    # Hard-bound to loopback only. Do NOT change.
+    ports:
+      - "127.0.0.1:8080:80"
+    # The demo lab intentionally serves a static page with security
+    # headers disabled, used purely for local header/metadata inspection
+    # via the scope-checked HTTP helpers.
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx:size=8m
+      - /var/run:size=4m
+    restart: "no"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/ >/dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 3

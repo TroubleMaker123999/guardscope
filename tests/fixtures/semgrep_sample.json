@@ -1,0 +1,32 @@
+{
+  "results": [
+    {
+      "check_id": "python.lang.security.audit.eval",
+      "path": "demo_app/helpers.py",
+      "start": {"line": 42, "col": 5},
+      "end":   {"line": 42, "col": 25},
+      "extra": {
+        "severity": "ERROR",
+        "message": "Detected the use of eval(). This is dangerous if user input is involved.",
+        "short_message": "Use of eval()",
+        "lines": "result = eval(user_input)",
+        "metadata": {
+          "cwe": ["CWE-95"],
+          "owasp": ["A03:2021 - Injection"],
+          "confidence": "HIGH"
+        }
+      }
+    },
+    {
+      "check_id": "python.lang.security.audit.dangerous-system-call",
+      "path": "demo_app/runner.py",
+      "start": {"line": 11, "col": 1},
+      "end":   {"line": 11, "col": 30},
+      "extra": {
+        "severity": "WARNING",
+        "message": "Detected subprocess call with shell=True.",
+        "metadata": {"cwe": ["CWE-78"]}
+      }
+    }
+  ]
+}

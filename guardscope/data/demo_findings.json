@@ -1,0 +1,93 @@
+[
+  {
+    "title": "Outdated OpenSSL on local nginx demo",
+    "description": "The local nginx demo image ships OpenSSL 3.0.x with a known LOW-severity issue. Upgrade to the latest 3.0 patch for the lab.",
+    "severity": "low",
+    "confidence": "high",
+    "cvss": 3.7,
+    "cwe": ["CWE-310"],
+    "owasp": ["A02:2021"],
+    "source": "trivy",
+    "asset": "guardscope-demo-lab:nginx@1.27-alpine",
+    "evidence": "OpenSSL 3.0.x < 3.0.13",
+    "remediation": "Rebuild the demo image with the latest nginx:1.27-alpine tag."
+  },
+  {
+    "title": "Missing Content-Security-Policy header on /",
+    "description": "The local demo lab does not return a Content-Security-Policy header, which is a defense-in-depth gap.",
+    "severity": "medium",
+    "confidence": "medium",
+    "cvss": 5.3,
+    "cwe": ["CWE-693"],
+    "owasp": ["A05:2021"],
+    "source": "zap",
+    "asset": "http://127.0.0.1:8080/",
+    "evidence": "Response headers do not contain 'content-security-policy'.",
+    "remediation": "Add a strict CSP to the demo nginx config (Content-Security-Policy: default-src 'self')."
+  },
+  {
+    "title": "Hardcoded password assignment in demo app",
+    "description": "Bandit flagged a hardcoded password string in the demo app's config loader.",
+    "severity": "high",
+    "confidence": "high",
+    "cvss": 7.5,
+    "cwe": ["CWE-798"],
+    "owasp": ["A07:2021"],
+    "source": "bandit",
+    "asset": "demo_app/config.py:12",
+    "evidence": "password = 'hunter2'",
+    "remediation": "Load secrets from the environment or a secrets manager; never from source."
+  },
+  {
+    "title": "Use of eval() in user-facing helper",
+    "description": "Semgrep rule python.lang.security.audit.eval matched an eval() call in the demo app.",
+    "severity": "high",
+    "confidence": "high",
+    "cvss": 7.0,
+    "cwe": ["CWE-95"],
+    "owasp": ["A03:2021"],
+    "source": "semgrep",
+    "asset": "demo_app/helpers.py:42",
+    "evidence": "eval(user_input)",
+    "remediation": "Replace eval() with a safe parser; never evaluate untrusted input."
+  },
+  {
+    "title": "Outbound SSH service fingerprint detected",
+    "description": "Nmap observed an SSH banner on port 22/TCP during the local lab scan.",
+    "severity": "info",
+    "confidence": "high",
+    "cvss": 0.0,
+    "cwe": [],
+    "owasp": [],
+    "source": "nmap",
+    "asset": "127.0.0.1:22/tcp",
+    "evidence": "127.0.0.1:22/tcp open ssh OpenSSH 9.6p1",
+    "remediation": "Confirm the SSH service is required; restrict source addresses."
+  },
+  {
+    "title": "Vulnerable dependency: requests < 2.31.0",
+    "description": "pip-audit reports PYSEC-2023-74 in the local lab's pinned requests package.",
+    "severity": "medium",
+    "confidence": "high",
+    "cvss": 6.1,
+    "cwe": ["CWE-20"],
+    "owasp": ["A06:2021"],
+    "source": "pip-audit",
+    "asset": "requests@2.20.0",
+    "evidence": "PYSEC-2023-74 aliases=CVE-2023-32681 fix=2.31.0",
+    "remediation": "Upgrade requests to >=2.31.0."
+  },
+  {
+    "title": "Cookie missing Secure attribute",
+    "description": "The local lab sets a session cookie without the Secure attribute.",
+    "severity": "low",
+    "confidence": "high",
+    "cvss": 3.1,
+    "cwe": ["CWE-614"],
+    "owasp": ["A05:2021"],
+    "source": "zap",
+    "asset": "http://127.0.0.1:8080/login",
+    "evidence": "Set-Cookie: session=...; HttpOnly",
+    "remediation": "Add the Secure attribute to all session cookies served by the lab."
+  }
+]

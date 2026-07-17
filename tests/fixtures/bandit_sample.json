@@ -1,0 +1,27 @@
+{
+  "_meta": {"version": "1.7.5"},
+  "results": [
+    {
+      "test_id": "B105",
+      "test_name": "hardcoded_password_string",
+      "issue_severity": "MEDIUM",
+      "issue_confidence": "HIGH",
+      "filename": "demo_app/config.py",
+      "line_number": 12,
+      "code": "password = 'hunter2'\n",
+      "issue_cwe": {"id": 259, "link": "https://cwe.mitre.org/data/definitions/259.html"},
+      "issue_text": "Possible hardcoded password."
+    },
+    {
+      "test_id": "B201",
+      "test_name": "flask_debug_true",
+      "issue_severity": "HIGH",
+      "issue_confidence": "MEDIUM",
+      "filename": "demo_app/app.py",
+      "line_number": 5,
+      "code": "app.run(debug=True)\n",
+      "issue_cwe": {"id": 489, "link": "https://cwe.mitre.org/data/definitions/489.html"},
+      "issue_text": "Flask app is run with debug=True."
+    }
+  ]
+}
