@@ -23,7 +23,7 @@ LAB_TARGETS: tuple[LabTarget, ...] = (
         key="juice-shop",
         name="juice-shop",
         host="127.0.0.1",
-        port=3000,
+        port=13000,
         description="OWASP Juice Shop, modern web vulns.",
         compose_file="offensive/lab_targets/compose/juice-shop.yml",
     ),
@@ -35,12 +35,8 @@ LAB_TARGETS: tuple[LabTarget, ...] = (
         description="Damn Vulnerable Web Application (security=low).",
         compose_file="offensive/lab_targets/compose/dvwa.yml",
     ),
-    LabTarget(
-        key="vuln-node",
-        name="vuln-node",
-        host="127.0.0.1",
-        port=3001,
-        description="Vulnerable Node.js app for SSRF / prototype pollution.",
-        compose_file="offensive/lab_targets/compose/vuln-node.yml",
-    ),
+    # NOTE: vuln-node was originally planned but its source image on
+    # ghcr.io is access-controlled (401 Unauthorized). It is parked in
+    # ``offensive/lab_targets/compose.disabled/`` so we don't lose the
+    # recipe and it stays out of the active catalog.
 )

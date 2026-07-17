@@ -10,7 +10,7 @@ services:
       RECAPTCHA_PRIV_KEY: ""
       RECAPTCHA_PUB_KEY: ""
       RECAPTCHA_ENABLED: "false"
-    read_only: true
-    tmpfs:
-      - /tmp:size=32M
+    # No ``read_only: true`` — DVWA runs MariaDB underneath and writes its
+    # database to /var/lib/mysql; it also expects Apache to write log files.
+    # Acceptable on a loopback-only sandbox target.
     restart: unless-stopped
