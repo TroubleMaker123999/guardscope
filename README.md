@@ -2,6 +2,8 @@
 
 > Defense-oriented, authorization-scoped vulnerability management and local-lab verification.
 
+**📖 中文文档**: 如果你用中文阅读，请看 [README_CN.md](README_CN.md)。
+
 GuardScope ingests security-scanner output, normalizes it into a single finding
 model, deduplicates by stable fingerprint, computes a risk score, and renders
 reports (Markdown, HTML, JSON, SARIF). It ships with a strict local-lab scope
@@ -10,6 +12,22 @@ guard so verification only ever touches `127.0.0.1`.
 The goal is a small, runnable, **resume-quality** portfolio project that
 demonstrates clean engineering around a real defensive workflow — *not* an
 offensive scanner.
+
+## Status
+
+| | |
+|---|---|
+| Backend tests | `120 passed` |
+| Frontend | `npm run typecheck` clean · `npm run build` 195 kB JS / 4.5 kB CSS |
+| Python | 3.12 |
+| Node | 18+ |
+| License | MIT (defensive-use disclaimer) |
+| Safety boundary | `LEGAL.md` (read first) |
+
+[![CI](https://img.shields.io/github/actions/workflow/status/TroubleMaker123999/guardscope/ci.yml?branch=main&style=flat-square)](https://github.com/TroubleMaker123999/guardscope/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/TroubleMaker123999/guardscope?style=flat-square)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.12-blue?style=flat-square)](https://www.python.org/)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=white)](https://react.dev/)
 
 ## Highlights
 
