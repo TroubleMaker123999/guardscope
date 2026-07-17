@@ -8,9 +8,12 @@ __pycache__/
 build/
 dist/
 *.db
+*.db-shm
+*.db-wal
 *.sqlite
 *.sqlite3
 reports/
+offensive-reports/
 .idea/
 .vscode/
 

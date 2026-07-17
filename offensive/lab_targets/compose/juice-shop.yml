@@ -2,12 +2,17 @@ services:
   juice-shop:
     image: bkimminich/juice-shop:latest
     # SECURITY: bound to loopback only. Do not change to 0.0.0.0.
+    # NOTE: mapped to 13000 because the host already binds PentAGI's Next UI
+    # on 3000. Adjust to any unused loopback port.
+    #
+    # No ``read_only: true`` — Juice Shop persists application state to a
+    # SQLite file at /juice-shop/data. We accept this on a sandbox target
+    # bound to loopback only; the host filesystem is untouched.
     ports:
-      - "127.0.0.1:3000:3000"
+      - "127.0.0.1:13000:3000"
     environment:
       # Disable telemetry endpoints that phone home.
       JUICE_SHOP_TELEMETRY: "false"
-    read_only: true
     tmpfs:
       - /tmp:size=64M
     restart: unless-stopped

@@ -8,5 +8,5 @@ cd "$(dirname "$0")/../.."
 ./.venv/bin/guardscope labs register \
   --name juice-shop \
   --host 127.0.0.1 \
-  --port 3000 \
+  --port 13000 \
   --description "OWASP Juice Shop (intentionally vulnerable)"
