@@ -7,7 +7,10 @@ on:
 
 jobs:
   backend:
-    runs-on: ubuntu-latest
+    # Pin to ubuntu-22.04 explicitly. The 'ubuntu-latest' tag is currently
+    # ubuntu-24.04 and we observed intermittent pytest failures there that
+    # do not reproduce locally; fixing the runner image keeps CI deterministic.
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -33,7 +36,7 @@ jobs:
           if-no-files-found: ignore
 
   frontend:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: frontend
