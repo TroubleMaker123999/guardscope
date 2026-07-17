@@ -197,13 +197,28 @@ button {
 /* Sidebar ----------------------------------------------------------------- */
 .sidebar {
   grid-area: sidebar;
-  background: var(--bg-2);
+  background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 100%);
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   padding: var(--s-4) var(--s-3);
   gap: var(--s-2);
   overflow-y: auto;
+  position: relative;
+}
+
+/* Subtle inner stripe along the right edge to add depth without an extra
+   border color. */
+.sidebar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent 0%, var(--accent-2) 50%, transparent 100%);
+  opacity: 0.35;
+  pointer-events: none;
 }
 
 .brand {
@@ -212,12 +227,14 @@ button {
   gap: var(--s-2);
   padding: var(--s-2) var(--s-3);
   margin-bottom: var(--s-3);
+  position: relative;
 }
 
+/* Brand mark — small gradient logo tile with a soft glow that pulses. */
 .brand-mark {
   width: 28px;
   height: 28px;
-  border-radius: 6px;
+  border-radius: 7px;
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
   display: grid;
   place-items: center;
@@ -226,12 +243,21 @@ button {
   font-size: 14px;
   letter-spacing: 0.02em;
   flex-shrink: 0;
+  box-shadow: 0 0 0 1px rgba(168, 123, 255, 0.4),
+    0 4px 14px rgba(107, 70, 214, 0.35);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.brand:hover .brand-mark {
+  transform: rotate(-3deg) scale(1.04);
+  box-shadow: 0 0 0 1px rgba(168, 123, 255, 0.6),
+    0 6px 18px rgba(107, 70, 214, 0.5);
 }
 
 .brand-name {
   font-weight: 600;
   font-size: 15px;
   color: var(--text-strong);
+  letter-spacing: 0.02em;
 }
 
 .brand-tag {
@@ -239,41 +265,71 @@ button {
   color: var(--muted);
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
 }
 
 .nav-section {
-  font-size: 11px;
-  letter-spacing: 0.1em;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted-2);
   padding: var(--s-3) var(--s-3) var(--s-1);
+  font-weight: 600;
 }
 
 .nav-link {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: var(--s-2);
+  gap: var(--s-3);
   padding: var(--s-2) var(--s-3);
-  border-radius: var(--r-sm);
+  border-radius: var(--r-md);
   color: var(--muted);
   text-decoration: none;
   font-size: 13.5px;
   border: 1px solid transparent;
+  transition: color 160ms ease, background 160ms ease,
+    border-color 160ms ease, transform 160ms ease;
 }
+
 .nav-link:hover {
   color: var(--text);
   background: var(--surface);
   text-decoration: none;
+  transform: translateX(2px);
 }
+
+/* Active item: filled surface, accent-colored left bar, soft glow. */
 .nav-link.is-active {
   background: var(--surface-2);
   color: var(--text-strong);
   border-color: var(--border);
 }
+
+.nav-link.is-active::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-2) 100%);
+  box-shadow: 0 0 8px var(--accent-strong);
+}
+
 .nav-link .nav-icon {
   color: inherit;
   flex-shrink: 0;
+  transition: transform 200ms ease;
 }
+
+.nav-link:hover .nav-icon,
+.nav-link.is-active .nav-icon {
+  transform: scale(1.08);
+  color: var(--accent-strong);
+}
+
 .nav-link .nav-badge {
   margin-left: auto;
   background: var(--surface-3);
@@ -281,6 +337,12 @@ button {
   font-size: 11px;
   padding: 1px 6px;
   border-radius: 999px;
+  font-variant-numeric: tabular-nums;
+}
+
+.nav-link.is-active .nav-badge {
+  background: var(--accent-2);
+  color: #ffffff;
 }
 
 .sidebar-footer {
@@ -479,38 +541,81 @@ button {
 /* Grids ------------------------------------------------------------------- */
 .kpi-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: var(--s-3);
   margin-bottom: var(--s-5);
 }
 
 .kpi {
-  background: var(--surface);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    160deg,
+    var(--surface) 0%,
+    var(--surface-2) 100%
+  );
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  padding: var(--s-4);
+  padding: var(--s-4) var(--s-4) var(--s-3);
   display: flex;
   flex-direction: column;
   gap: var(--s-2);
+  transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
 }
+.kpi:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Accent corner stripe. Default points top-left. */
+.kpi::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 0 0 2px 0;
+  transition: width 240ms ease;
+}
+.kpi:hover::before {
+  width: 100%;
+}
+.kpi.is-bad::before {
+  background: var(--bad);
+}
+.kpi.is-warn::before {
+  background: var(--warn);
+}
+.kpi.is-ok::before {
+  background: var(--ok);
+}
+
 .kpi .kpi-label {
-  font-size: 11px;
+  font-size: 10.5px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   color: var(--muted);
   display: flex;
   align-items: center;
   gap: 6px;
+  font-weight: 600;
 }
 .kpi .kpi-value {
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 30px;
+  font-weight: 700;
   color: var(--text-strong);
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 2px 0;
 }
 .kpi .kpi-sub {
   font-size: 12px;
   color: var(--muted);
+  font-variant-numeric: tabular-nums;
 }
 .kpi.is-bad .kpi-value {
   color: var(--bad);
@@ -639,6 +744,7 @@ button {
 
 /* Tables / lists ---------------------------------------------------------- */
 .list-row {
+  position: relative;
   display: grid;
   grid-template-columns: 84px 1fr 100px 1fr 90px;
   align-items: center;
@@ -647,16 +753,65 @@ button {
   border-bottom: 1px solid var(--border);
   cursor: pointer;
   font-size: 13px;
+  transition: background 140ms ease, transform 140ms ease;
 }
 .list-row:last-child {
   border-bottom: none;
 }
 .list-row:hover {
   background: var(--surface-2);
+  transform: translateX(2px);
 }
 .list-row.is-selected {
   background: var(--surface-2);
-  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+/* The left edge stripe. Driven by a sibling severity pill via attribute
+   selectors so different severities get their own color without each row
+   needing a class. */
+.list-row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--muted);
+  opacity: 0.6;
+  transition: opacity 140ms ease, transform 140ms ease;
+}
+.list-row:has(.severity-pill.sev-critical)::before {
+  background: var(--sev-critical);
+  opacity: 1;
+  box-shadow: 0 0 8px rgba(255, 90, 122, 0.5);
+}
+.list-row:has(.severity-pill.sev-high)::before {
+  background: var(--bad);
+  opacity: 1;
+}
+.list-row:has(.severity-pill.sev-medium)::before {
+  background: var(--warn);
+  opacity: 1;
+}
+.list-row:has(.severity-pill.sev-low)::before {
+  background: var(--info);
+  opacity: 0.85;
+}
+.list-row:has(.severity-pill.sev-info)::before {
+  background: var(--ok);
+  opacity: 0.85;
+}
+.list-row:has(.severity-pill.sev-unknown)::before {
+  background: var(--unknown);
+  opacity: 0.5;
+}
+.list-row:hover::before {
+  transform: scaleX(1.4);
+}
+.list-row.is-selected::before {
+  background: var(--accent);
+  opacity: 1;
 }
 .list-row .cell-title {
   font-weight: 500;
@@ -738,12 +893,22 @@ button {
 }
 
 /* Drawer ------------------------------------------------------------------ */
+@keyframes drawer-in {
+  from { transform: translateX(40px); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+@keyframes backdrop-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 .drawer-backdrop {
   position: fixed;
   inset: 0;
   background: rgba(8, 6, 16, 0.55);
   backdrop-filter: blur(2px);
   z-index: 30;
+  animation: backdrop-in 160ms ease both;
 }
 .drawer {
   position: fixed;
@@ -751,12 +916,13 @@ button {
   right: 0;
   bottom: 0;
   width: min(560px, 100vw);
-  background: var(--bg-2);
+  background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 100%);
   border-left: 1px solid var(--border);
   z-index: 31;
   display: flex;
   flex-direction: column;
   box-shadow: -16px 0 32px rgba(0, 0, 0, 0.4);
+  animation: drawer-in 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .drawer-header {
   padding: var(--s-4);
@@ -764,6 +930,17 @@ button {
   display: flex;
   align-items: flex-start;
   gap: var(--s-3);
+  position: relative;
+}
+.drawer-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent) 50%, transparent);
+  opacity: 0.5;
 }
 .drawer-header .drawer-title {
   flex: 1;
@@ -772,9 +949,11 @@ button {
 .drawer-header h2 {
   text-transform: none;
   letter-spacing: 0;
-  font-size: 16px;
+  font-size: 17px;
+  font-weight: 600;
   color: var(--text-strong);
   margin-bottom: 6px;
+  word-break: break-word;
 }
 .drawer-body {
   overflow: auto;
@@ -785,6 +964,11 @@ button {
 }
 .drawer-section h3 {
   margin-bottom: var(--s-2);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  font-weight: 600;
 }
 .drawer-section .kv {
   display: grid;
@@ -799,18 +983,20 @@ button {
   margin: 0;
   color: var(--text);
   word-break: break-word;
+  font-variant-numeric: tabular-nums;
 }
 .drawer-section pre {
   margin: 0;
   background: var(--bg);
   border: 1px solid var(--border);
+  border-radius: var(--r-md);
   padding: var(--s-3);
-  border-radius: var(--r-sm);
   font-size: 12px;
   max-height: 240px;
   overflow: auto;
   white-space: pre-wrap;
   word-break: break-word;
+  font-family: var(--font-mono);
 }
 
 /* Alerts ------------------------------------------------------------------ */
@@ -895,24 +1081,54 @@ button {
   padding: var(--s-7) var(--s-4);
   text-align: center;
   color: var(--muted);
+  position: relative;
 }
 .state .state-icon {
   color: var(--muted-2);
-  margin-bottom: var(--s-2);
+  margin-bottom: var(--s-3);
+  display: inline-flex;
+  padding: var(--s-3);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
 }
 .state .state-title {
   color: var(--text);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
+  font-weight: 500;
+  font-size: 14px;
 }
 .state .state-detail {
   font-size: 12px;
+  max-width: 360px;
+  margin: 0 auto;
+  line-height: 1.5;
 }
 
 .skeleton {
   background: linear-gradient(90deg, var(--surface-2) 0%, var(--surface-3) 50%, var(--surface-2) 100%);
   background-size: 200% 100%;
   animation: shimmer 1.4s ease-in-out infinite;
-  border-radius: 4px;
+  border-radius: var(--r-sm);
+  display: inline-block;
+  height: 1em;
+  vertical-align: middle;
+}
+.skeleton-line {
+  display: block;
+  width: 100%;
+  margin: 6px 0;
+}
+.skeleton.is-circle {
+  border-radius: 50%;
+  width: 1em;
+  height: 1em;
+}
+.skeleton.is-block {
+  display: block;
+  width: 100%;
+  height: 96px;
+  border-radius: var(--r-md);
 }
 @keyframes shimmer {
   0% {
