@@ -17,7 +17,7 @@ offensive scanner.
 
 | | |
 |---|---|
-| Backend tests | `120 passed` (verified locally; CI history under [Actions](../../actions)) |
+| Backend tests | `120 passed` (verified locally; CI history under [Actions](../../actions); the GitHub runner tests are currently red and intentionally not blocking the README badge) |
 | Frontend | `npm run typecheck` clean · `npm run build` 195 kB JS / 4.5 kB CSS |
 | Python | 3.12 |
 | Node | 18+ |

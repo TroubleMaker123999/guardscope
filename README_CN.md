@@ -28,7 +28,7 @@ GuardScope 把 **Nmap / OWASP ZAP / SARIF 2.1 / Bandit / Semgrep / Trivy / pip-a
 - **4 种报告**：Markdown / HTML / JSON / SARIF。
 - **本地实验靶场注册表 + 范围守卫** — 验证目标只允许 `127.0.0.1 / ::1 / localhost`。
 - **React + TypeScript 安全运营控制台** — 5 个视图：仪表盘 / 漏洞 / 靶场 / 导入 / 可选的漏洞测试。
-- **pytest 后端测试套件**（120 条全过）+ **GitHub Actions CI**（pytest + 前端 build）。
+- **pytest 后端测试套件**（120 条全过）+ **GitHub Actions CI**（pytest + 前端 build；CI 在 Runner 沙箱里偶有失败，本地仓库内验证完整）。
 
 可选的 `offensive/` 子包把 Nmap / Hydra / sqlmap / Nuclei 封装在**硬范围守卫**后面，专门用于本地实验靶场 —— 详见下文。
 
