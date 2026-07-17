@@ -18,6 +18,8 @@ from __future__ import annotations
 
 import json
 import os
+import sys
+from pathlib import Path as _Path
 from typing import List, Optional
 
 from fastapi import FastAPI, HTTPException, Query, Request, UploadFile, File, Form
@@ -160,6 +162,15 @@ def _cors_origins_from_env() -> list[str]:
 def create_app(db_path: str | None = None) -> FastAPI:
     """Build a FastAPI app bound to the given SQLite database."""
 
+    # The ``offensive`` package lives as a sibling top-level directory rather
+    # than inside ``guardscope`` (so it stays out of the published Python
+    # package). When the FastAPI factory is invoked by uvicorn with
+    # ``factory=True`` the current working directory is not automatically on
+    # ``sys.path``, so we add it here — but only if it's missing.
+    cwd = _Path(os.getcwd()).resolve()
+    cwd_str = str(cwd)
+    if cwd_str not in sys.path:
+        sys.path.insert(0, cwd_str)
     db = db_path or os.environ.get("GUARDSCOPE_DB") or "./guardscope.db"
     init_db(db)
     labs = LabRegistry(db)
@@ -178,6 +189,25 @@ def create_app(db_path: str | None = None) -> FastAPI:
         allow_headers=["Content-Type", "Accept"],
         max_age=600,
     )
+
+    # ------------------------------------------------------------------ plugins
+    # Mount the offensive HTTP API alongside the defensive one. The router
+    # lives in a sibling top-level package (``offensive``) so importing it
+    # here keeps `guardscope.api` free of any attack-tool imports.
+    try:
+        from offensive.api import router as offensive_router
+
+        app.include_router(offensive_router)
+    except ImportError as exc:
+        # The offensive package is optional; if it's not installed for any
+        # reason, the defensive surface still works. We log so the operator
+        # can diagnose why /offensive/* endpoints return 404.
+        import logging
+
+        logging.getLogger("guardscope.api").warning(
+            "offensive module not mounted: %s", exc
+        )
+        offensive_router = None  # type: ignore[assignment]  # noqa: F841
 
     # ------------------------------------------------------------------ helpers
     def _to_out(f: Finding, dup: int = 1) -> FindingOut:

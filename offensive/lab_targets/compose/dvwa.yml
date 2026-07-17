@@ -1,0 +1,16 @@
+services:
+  dvwa:
+    image: vulnerables/web-dvwa:latest
+    ports:
+      - "127.0.0.1:8081:80"
+    environment:
+      # DVWA defaults to "impossible"; force "low" so we have something to find.
+      SECURITY: "low"
+      # Don't show the setup nag.
+      RECAPTCHA_PRIV_KEY: ""
+      RECAPTCHA_PUB_KEY: ""
+      RECAPTCHA_ENABLED: "false"
+    read_only: true
+    tmpfs:
+      - /tmp:size=32M
+    restart: unless-stopped

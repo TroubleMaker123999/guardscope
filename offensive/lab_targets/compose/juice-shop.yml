@@ -1,0 +1,13 @@
+services:
+  juice-shop:
+    image: bkimminich/juice-shop:latest
+    # SECURITY: bound to loopback only. Do not change to 0.0.0.0.
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      # Disable telemetry endpoints that phone home.
+      JUICE_SHOP_TELEMETRY: "false"
+    read_only: true
+    tmpfs:
+      - /tmp:size=64M
+    restart: unless-stopped

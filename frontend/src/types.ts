@@ -135,3 +135,72 @@ export interface BackendState {
   db?: string;
   error?: string;
 }
+
+// ---------------------------------------------------------------------------
+// Offensive module types (mirrors backend `offensive.api` schemas).
+// ---------------------------------------------------------------------------
+
+export interface Availability {
+  nmap: boolean;
+  hydra: boolean;
+  sqlmap: boolean;
+  nuclei: boolean;
+}
+
+export interface LabTarget {
+  key: string;
+  name: string;
+  host: string;
+  port: number;
+  description: string;
+  compose_file: string;
+}
+
+export interface NmapRequest {
+  target: string;
+  ports?: string;
+  scan_type?: string;
+  scripts?: string[];
+}
+
+export interface HydraRequest {
+  target: string;
+  service: string;
+  username: string;
+  wordlist_path: string;
+  port?: number;
+  throttle?: number;
+}
+
+export interface SqlmapRequest {
+  target: string;
+  url: string;
+  level?: number;
+  risk?: number;
+}
+
+export interface NucleiRequest {
+  target: string;
+  url: string;
+  categories?: string[];
+}
+
+export interface OffensiveRun {
+  ok: boolean;
+  tool: string;
+  target: string;
+  summary: string;
+  output_path?: string | null;
+  injectable?: boolean | null;
+  matched?: number | null;
+}
+
+export interface RunHistoryEntry {
+  id: string;
+  timestamp: number;
+  actor: string;
+  action: string;
+  target: string;
+  exit_code: number | null;
+  summary: string;
+}

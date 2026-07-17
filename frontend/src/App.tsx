@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   Activity,
   ClipboardList,
+  Crosshair,
   FlaskConical,
   LayoutDashboard,
   Upload,
@@ -10,17 +11,19 @@ import Dashboard from "./pages/Dashboard";
 import Findings from "./pages/Findings";
 import Labs from "./pages/Labs";
 import ImportReports from "./pages/ImportReports";
+import Offensive from "./pages/Offensive";
 import DemoBanner from "./components/DemoBanner";
 import { useBackend } from "./lib/useBackend";
 import type { BackendState } from "./types";
 
-export type RouteId = "dashboard" | "findings" | "labs" | "import";
+export type RouteId = "dashboard" | "findings" | "labs" | "import" | "offensive";
 
 const ROUTES: Array<{ id: RouteId; label: string; path: string; icon: typeof Activity }> = [
   { id: "dashboard", label: "仪表盘", path: "#/dashboard", icon: LayoutDashboard },
   { id: "findings", label: "漏洞发现", path: "#/findings", icon: ClipboardList },
   { id: "labs", label: "本地实验靶场", path: "#/labs", icon: FlaskConical },
   { id: "import", label: "导入与报告", path: "#/import", icon: Upload },
+  { id: "offensive", label: "漏洞测试", path: "#/offensive", icon: Crosshair },
 ];
 
 function readRoute(): RouteId {
@@ -28,6 +31,7 @@ function readRoute(): RouteId {
   if (h.startsWith("#/findings")) return "findings";
   if (h.startsWith("#/labs")) return "labs";
   if (h.startsWith("#/import")) return "import";
+  if (h.startsWith("#/offensive")) return "offensive";
   return "dashboard";
 }
 
@@ -47,6 +51,10 @@ const TITLES: Record<RouteId, { title: string; sub: string }> = {
   import: {
     title: "导入与报告",
     sub: "接入扫描器输出并导出报告",
+  },
+  offensive: {
+    title: "漏洞测试",
+    sub: "对已注册靶场调用 Nmap / Hydra / sqlmap / Nuclei",
   },
 };
 
@@ -69,6 +77,8 @@ export default function App() {
     body = <Findings backend={backend} />;
   } else if (route === "labs") {
     body = <Labs backend={backend} />;
+  } else if (route === "offensive") {
+    body = <Offensive backend={backend} />;
   } else {
     body = <ImportReports backend={backend} />;
   }

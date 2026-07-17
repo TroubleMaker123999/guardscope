@@ -1,0 +1,9 @@
+services:
+  vuln-node:
+    image: ghcr.io/snyk-labs/vuln-node-app:latest
+    ports:
+      - "127.0.0.1:3001:3000"
+    read_only: true
+    tmpfs:
+      - /tmp:size=32M
+    restart: unless-stopped
