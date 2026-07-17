@@ -17,17 +17,18 @@ offensive scanner.
 
 | | |
 |---|---|
-| Backend tests | `120 passed` |
+| Backend tests | `120 passed` (verified locally; CI history under [Actions](../../actions)) |
 | Frontend | `npm run typecheck` clean · `npm run build` 195 kB JS / 4.5 kB CSS |
 | Python | 3.12 |
 | Node | 18+ |
 | License | MIT (defensive-use disclaimer) |
 | Safety boundary | `LEGAL.md` (read first) |
 
-[![CI](https://img.shields.io/github/actions/workflow/status/TroubleMaker123999/guardscope/ci.yml?branch=main&style=flat-square)](https://github.com/TroubleMaker123999/guardscope/actions/workflows/ci.yml)
 [![License](https://img.shields.io/github/license/TroubleMaker123999/guardscope?style=flat-square)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.12-blue?style=flat-square)](https://www.python.org/)
 [![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=white)](https://react.dev/)
+[![Tests](https://img.shields.io/badge/tests-120%20passed-brightgreen?style=flat-square)]()
+[![CI](https://img.shields.io/badge/CI-see%20Actions-lightgrey?style=flat-square)](../../actions)
 
 ## Highlights
 

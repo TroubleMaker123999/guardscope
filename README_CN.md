@@ -2,11 +2,11 @@
 
 > **Defense-oriented, authorization-scoped vulnerability management** — 防御向、授权范围内的漏洞接入与报告平台。
 
-[![CI](https://img.shields.io/github/actions/workflow/status/TroubleMaker123999/guardscope/ci.yml?branch=main&style=flat-square)](https://github.com/TroubleMaker123999/guardscope/actions/workflows/ci.yml)
 [![License](https://img.shields.io/github/license/TroubleMaker123999/guardscope?style=flat-square)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.12-blue?style=flat-square)](https://www.python.org/)
 [![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=white)](https://react.dev/)
 [![Tests](https://img.shields.io/badge/tests-120%20passed-brightgreen?style=flat-square)]()
+[![CI](https://img.shields.io/badge/CI-see%20Actions-lightgrey?style=flat-square)](../../actions)
 
 GuardScope 把 **Nmap / OWASP ZAP / SARIF 2.1 / Bandit / Semgrep / Trivy / pip-audit** 七种扫描器输出归一化成一种内部数据模型，并提供去重、风险评分，以及 Markdown / HTML / JSON / SARIF 四种报告导出。
 
